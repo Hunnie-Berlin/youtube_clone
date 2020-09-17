@@ -1,0 +1,21 @@
+{
+  "name": "youtube_clone",
+  "version": "1.0.0",
+  "description": "with NodeJS, Express, MongoDB, Mongoose, Pug, SCSS, Webpack etc.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hunnie-Berlin/youtube_clone.git"
+  },
+  "author": "Hunnie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hunnie-Berlin/youtube_clone/issues"
+  },
+  "homepage": "https://github.com/Hunnie-Berlin/youtube_clone#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
