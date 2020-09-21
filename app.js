@@ -10,6 +10,7 @@ import videoRouter from "./routers/videoRouter";
 
 const app = express();
 
+app.set("view engine", "pug");
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
