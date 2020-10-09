@@ -5,7 +5,7 @@ export const home = async (req, res) => {
   try {
     const videos = await Video.find({}).sort({ createdAt: -1 });
     res.render("home", { pageTitle: "Home", videos });
-  } catch {
+  } catch (error) {
     console.log(error);
     res.render("home", { pageTitle: "Home", videos: [] });
   }
@@ -20,7 +20,7 @@ export const search = async (req, res) => {
     videos = await Video.find({
       title: { $regex: searchingBy, $options: "i" },
     });
-  } catch {
+  } catch (error) {
     console.log(error);
   }
   res.render("search", { pageTitle: searchingBy, searchingBy, videos });
@@ -51,7 +51,7 @@ export const videoDetail = async (req, res) => {
     } = req;
     const video = await Video.findById(id);
     res.render("videoDetail", { pageTitle: video.title, video });
-  } catch {
+  } catch (error) {
     console.log(error);
     res.redirect(routes.home);
   }
@@ -64,7 +64,7 @@ export const getEditVideo = async (req, res) => {
     } = req;
     const video = await Video.findById(id);
     res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
-  } catch {
+  } catch (error) {
     console.log(error);
     res.redirect(routes.home);
   }
@@ -78,7 +78,7 @@ export const postEditVideo = async (req, res) => {
 
     await Video.findByIdAndUpdate(id, { title, description });
     res.redirect(routes.videos + routes.videoDetail(id));
-  } catch {
+  } catch (error) {
     console.log(error);
     res.redirect(routes.home);
   }
@@ -90,7 +90,7 @@ export const deleteVideo = async (req, res) => {
       params: { id },
     } = req;
     await Video.findByIdAndDelete(id);
-  } catch {
+  } catch (error) {
     console.log(error);
   }
   res.redirect(routes.home);

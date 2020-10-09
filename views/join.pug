@@ -2,6 +2,8 @@ extends layouts/main.pug
 
 block content
     .form-container
+        if errorMessage
+            .error-massage=errorMessage
         form(action=routes.join, method="POST")
             input(type="name", name="name", placeholder="Full Name", required=true)
             input(type="email", name="email", placeholder="Email", required=true)
