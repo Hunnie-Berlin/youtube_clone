@@ -38,6 +38,7 @@ export const postUpload = async (req, res) => {
     fileUrl: path,
     title,
     description,
+    creator: req.user.id
   });
   console.log(newVideo);
   // To Do: Upload and save video
@@ -49,7 +50,7 @@ export const videoDetail = async (req, res) => {
     const {
       params: { id },
     } = req;
-    const video = await Video.findById(id);
+    const video = await Video.findById(id).populate("creator");
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
