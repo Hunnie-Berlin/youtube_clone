@@ -1,6 +1,7 @@
 import passport from "passport";
 import routes from "../routes";
 import User from "../models/User";
+import Video from "../models/Video";
 
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
@@ -69,15 +70,22 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const getMe = (req, res) => {
-  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+export const getMe = async (req, res) => {
+  try{
+    const videos = await Video.find({"creator": req.user.id });
+    res.render("userDetail", { pageTitle: "User Detail", user: req.user, videos });
+  } catch(error){
+    console.log(error);
+    res.redirect(routes.home);
+  }
 }
 
 export const userDetail = async (req, res) =>{
   const {params: id} =req;
   try{
     const user = await User.findById(id.id? id.id : id);
-    res.render("userDetail", { pageTitle: "User Detail", user });
+    const videos = await Video.find({"creator": user.id });
+    res.render("userDetail", { pageTitle: "User Detail", user, videos });
   } catch(error) {
     res.redirect(routes.home);
     console.log(error);

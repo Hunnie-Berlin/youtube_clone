@@ -4,6 +4,13 @@
   background-color: $dark-grey;
   border-radius: 50%;
 }
+.no-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  color: $grey;
+}
 video {
   list-style-type: none;
   outline: none;

@@ -1,6 +1,9 @@
 .home-videos {
   display: grid;
   grid-template-columns: repeat(6, minmax(150px, 1fr));
+  video {
+    max-height: 330px;
+  }
   grid-gap: 30px;
   .videoBlock:first-child,
   .videoBlock:nth-child(2) {
