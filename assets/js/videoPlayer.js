@@ -26,7 +26,15 @@ function handleVolumeClick() {
 }
 
 function goFullScreen() {
-    videoContainer.requestFullscreen();
+    if (videoContainer.requestFullscreen) {
+        videoContainer.requestFullscreen();
+      } else if (videoContainer.mozRequestFullScreen) {
+        videoContainer.mozRequestFullScreen();
+      } else if (videoContainer.webkitRequestFullscreen) {
+        videoContainer.webkitRequestFullscreen();
+      } else if (videoContainer.msRequestFullscreen) {
+        videoContainer.msRequestFullscreen();
+      }
     fullScreen.innerHTML = '<i class="fas fa-compress"></i>';
     fullScreen.removeEventListener("click", goFullScreen);
     fullScreen.addEventListener("click", exitFullScreen);
@@ -36,7 +44,15 @@ function exitFullScreen(){
     fullScreen.innerHTML = '<i class="fas fa-expand"></i>';
     fullScreen.removeEventListener("click", exitFullScreen);
     fullScreen.addEventListener("click", goFullScreen);
-    document.exitFullscreen(); 
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
 }
 
 function init(){
