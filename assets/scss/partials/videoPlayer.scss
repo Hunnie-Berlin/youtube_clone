@@ -27,10 +27,28 @@
     .videoPlayer__column:first-child {
       display: flex;
       align-items: center;
-      span:first-child {
+      #jsVolumeBtn {
         margin-right: 10px;
+        &:hover ~ .videoPlayer__volume {
+          opacity: 0.8;
+        }
       }
     }
+    .videoPlayer__volume {
+      position: absolute;
+      padding: 0;
+      opacity: 0;
+      transition: opacity 0.4s linear;
+      top: -60px;
+      left: -25px;
+      transform: rotate(-90deg);
+      z-index: 10;
+      width: 80px;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
     .videoPlayer__column:nth-child(2) {
       display: flex;
       justify-content: center;
