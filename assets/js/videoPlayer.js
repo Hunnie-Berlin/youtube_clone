@@ -77,7 +77,8 @@ const formatDate = seconds => {
     if (totalSeconds < 10) {
         totalSeconds = `0${totalSeconds}`;
     }
-  return `${hours}${minutes}:${totalSeconds}`;
+
+  return isNaN(hours)? "" : `${hours}${minutes}:${totalSeconds}`;
 };
 
 function getCurrentTime() {
@@ -87,7 +88,7 @@ function getCurrentTime() {
 function setTotalTime() {
   const totalTimeString = formatDate(videoPlayer.duration);
   currentTime.innerHTML = formatDate(videoPlayer.currentTime);
-  totalTime.innerHTML = totalTimeString;
+  totalTime.innerHTML = totalTimeString=== "" ? "" : ` / ${totalTimeString}`;
   videoPlayer.addEventListener("timeupdate", getCurrentTime);
 }
 
