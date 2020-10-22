@@ -18,20 +18,30 @@ block content
             .video__author
                 |Uploaded by 
                 a(href=routes.users+routes.userDetail(video.creator.id))=video.creator.name
+                span.invisible#jsLoggedUserName=loggedUser.name
+                span.invisible#jsLoggedUserAvatarUrl=loggedUser.avatarUrl
             hr.hr
             p.video__description=video.description
             hr.hr
         .video__comments
-            if video.comments.length === 0
+            if comments.length === 0
                 span.video__comment-number#jsCommentNumber No comments
-            else if video.comments.length === 1
+            else if comments.length === 1
                 span.video__comment-number#jsCommentNumber 1 comment
             else
-                span.video__comment-number#jsCommentNumber #{video.comments.length} comments
+                span.video__comment-number#jsCommentNumber #{comments.length} comments
             if loggedUser
                 form.add__comment#jsAddComment
                     input(type="text", placeholder="Add a comment")
             ul.video__comments-list#jsCommentList
-                each comment in video.comments.reverse()
-                    li
-                        span=comment.text
+                each comment in comments.reverse()
+                    li(class=comment.id)
+                        if comment.creator.avatarUrl
+                            img.comment-avatar(src=`/${comment.creator.avatarUrl}`)
+                            span.comment-creator=comment.creator.name
+                        else
+                            .comment-avatar=comment.creator.name[0]
+                            span.comment-creator=comment.creator.name
+                        span.commet-text=comment.text
+                        if loggedUser && comment.creator.id === loggedUser.id
+                            i.far.fa-trash-alt.jsDeleteIcon

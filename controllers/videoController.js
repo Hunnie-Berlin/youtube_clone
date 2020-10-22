@@ -1,4 +1,5 @@
 import routes from "../routes";
+import User from "../models/User";
 import Video from "../models/Video";
 import Comment from "../models/Comment";
 
@@ -49,8 +50,9 @@ export const videoDetail = async (req, res) => {
     const {
       params: { id },
     } = req;
-    const video = await Video.findById(id).populate("creator").populate("comments");
-    res.render("videoDetail", { pageTitle: video.title, video });
+    const video = await Video.findById(id).populate("creator");
+    const comments = await Comment.find({linkedVideoId: id}).populate("creator");
+    res.render("videoDetail", { pageTitle: video.title, video, comments});
   } catch (error) {
     console.log(error);
     res.redirect(routes.home);
@@ -131,11 +133,32 @@ export const postAddComment = async (req, res) => {
     const video = await Video.findById(id);
     const newComment = await Comment.create({
       text: comment,
-      creator: user.id
+      creator: user.id,
+      linkedVideoId: id
     });
     video.comments.push(newComment.id);
     video.save();
   } catch(error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
+}
+
+export const postDeleteComment = async (req, res) => {
+  try{
+    const {
+      params: { id },
+      body: {commentId},
+    } = req;
+
+    const video = await Video.findById(id);
+    // console.log(commentId);
+    video.comments.pop(commentId);
+    video.save();
+    await Comment.findByIdAndRemove(commentId);
+  } catch(error) {
+    console.log(error);
     res.status(400);
   } finally {
     res.end();

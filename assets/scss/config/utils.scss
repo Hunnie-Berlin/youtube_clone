@@ -3,7 +3,9 @@
   width: 100px;
   background-color: $dark-grey;
   border-radius: 50%;
+  object-fit: contain;
 }
+
 .no-avatar {
   display: flex;
   justify-content: center;
@@ -11,6 +13,21 @@
   font-size: 80px;
   color: $grey;
 }
+
+.comment-avatar {
+  height: 24px;
+  width: 24px;
+  background-color: $dark-grey;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $black;
+  font-weight: 700;
+  object-fit: contain;
+}
+
 video {
   list-style-type: none;
   outline: none;

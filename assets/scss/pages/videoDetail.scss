@@ -68,6 +68,38 @@
         color: #000834;
         font-size: 18px;
         border-radius: 16px 16px 16px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span {
+          display: block;
+          line-height: 1.5em;
+          text-align: start;
+        }
+        .commet-text {
+          width: 80%;
+        }
+        .comment-creator {
+          width: 20%;
+          max-width: 84px;
+          margin-left: 8px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          min-width: 0;
+          color: royalblue;
+        }
+
+        i {
+          border: none;
+          background-color: transparent;
+          box-shadow: none;
+          color: royalblue;
+          margin-left: 16px;
+          &:hover {
+            color: red;
+          }
+        }
       }
     }
   }

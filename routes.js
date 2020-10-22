@@ -27,7 +27,7 @@ const GITHUB_CALLBACK = "/auth/github/callback";
 const API = "/api";
 const RESISTER_VIEW = "/:id/view";
 const ADD_COMMENT = "/:id/comment";
-
+const DELETE_COMMENT = "/:id/comment/delete";
 
 
 const routes = {
@@ -74,7 +74,8 @@ const routes = {
   me: ME,
   api: API,
   registerView: RESISTER_VIEW,
-  addComment: ADD_COMMENT
+  addComment: ADD_COMMENT,
+  deleteComment: DELETE_COMMENT
 };
 
 export default routes;

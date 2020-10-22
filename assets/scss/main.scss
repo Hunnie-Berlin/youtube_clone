@@ -28,6 +28,9 @@ main {
     transform: scale(1) translate(0, 0);
   }
 }
+.invisible {
+  display: none;
+}
 
 button,
 input:not([type="file"]),
