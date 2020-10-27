@@ -18,8 +18,9 @@ block content
             .video__author
                 |Uploaded by 
                 a(href=routes.users+routes.userDetail(video.creator.id))=video.creator.name
-                span.invisible#jsLoggedUserName=loggedUser.name
-                span.invisible#jsLoggedUserAvatarUrl=loggedUser.avatarUrl
+                if loggedUser
+                    span.invisible#jsLoggedUserName=loggedUser.name
+                    span.invisible#jsLoggedUserAvatarUrl=loggedUser.avatarUrl
             hr.hr
             p.video__description=video.description
             hr.hr
@@ -37,7 +38,7 @@ block content
                 each comment in comments.reverse()
                     li(class=comment.id)
                         if comment.creator.avatarUrl
-                            img.comment-avatar(src=`/${comment.creator.avatarUrl}`)
+                            img.comment-avatar(src=comment.creator.avatarUrl)
                             span.comment-creator=comment.creator.name
                         else
                             .comment-avatar=comment.creator.name[0]

@@ -4,6 +4,11 @@
   align-items: center;
   flex-direction: column;
 
+  video {
+    max-width: 500px;
+    max-height: 280px;
+  }
+
   button {
     width: 300px;
     height: 35px;

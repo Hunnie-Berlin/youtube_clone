@@ -12,7 +12,10 @@ export const postJoin = async (req, res, next) => {
   } = req;
   if (password !== password2) {
     res.status(400);
-    res.render("join", { pageTitle: "Join", errorMessage: "The Passwords don't match each other." });
+    res.render("join", {
+      pageTitle: "Join",
+      errorMessage: "The Passwords don't match each other.",
+    });
   } else {
     try {
       const user = await User({ name, email });
@@ -20,7 +23,10 @@ export const postJoin = async (req, res, next) => {
       next();
     } catch (error) {
       console.log(error);
-      res.render("join", { pageTitle: "Join", errorMessage: "The email already exists. Please try again." });
+      res.render("join", {
+        pageTitle: "Join",
+        errorMessage: "The email already exists. Please try again.",
+      });
     }
   }
 };
@@ -42,17 +48,15 @@ export const postGithubLogin = (req, res) => {
 export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: { id, avatar_url: avatarUrl, name },
-    } = profile;
-  const {value: email} = profile.emails[0];
-    try {
-    const user = await User.findOne({email});
-    if(user){
+  } = profile;
+  const { value: email } = profile.emails[0];
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
       user.githubId = id;
-      // user.name?  user.name: name;
-      // user.avatarUrl? user.avatarUrl: avatarUrl;
       user.save();
       return cb(null, user);
-    } 
+    }
     const newUser = await User.create({
       email,
       name,
@@ -60,8 +64,8 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
       avatarUrl,
     });
     return cb(null, newUser);
-  } catch(error) {
-return cb(error);
+  } catch (error) {
+    return cb(error);
   }
 };
 
@@ -71,26 +75,30 @@ export const logout = (req, res) => {
 };
 
 export const getMe = async (req, res) => {
-  try{
-    const videos = await Video.find({"creator": req.user.id });
-    res.render("userDetail", { pageTitle: "User Detail", user: req.user, videos });
-  } catch(error){
+  try {
+    const videos = await Video.find({ creator: req.user.id });
+    res.render("userDetail", {
+      pageTitle: "User Detail",
+      user: req.user,
+      videos,
+    });
+  } catch (error) {
     console.log(error);
     res.redirect(routes.home);
   }
-}
+};
 
-export const userDetail = async (req, res) =>{
-  const {params: id} =req;
-  try{
-    const user = await User.findById(id.id? id.id : id);
-    const videos = await Video.find({"creator": user.id });
+export const userDetail = async (req, res) => {
+  const { params: id } = req;
+  try {
+    const user = await User.findById(id.id ? id.id : id);
+    const videos = await Video.find({ creator: user.id });
     res.render("userDetail", { pageTitle: "User Detail", user, videos });
-  } catch(error) {
+  } catch (error) {
     res.redirect(routes.home);
     console.log(error);
   }
-}
+};
 
 export const getEditProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
@@ -98,39 +106,38 @@ export const getEditProfile = (req, res) =>
 export const postEditProfile = async (req, res) => {
   try {
     const {
-    body: {name, email},
-    file
-  } = req;
-  await User.findByIdAndUpdate(req.user.id, {
-    name,
-    email,
-    avatarUrl: file ? file.path : req.user.avatarUrl
-  })
-  res.redirect(routes.me);
-  } catch(error) {
+      body: { name, email },
+      file,
+    } = req;
+    await User.findByIdAndUpdate(req.user.id, {
+      name,
+      email,
+      avatarUrl: file ? file.location : req.user.avatarUrl,
+    });
+    res.redirect(routes.me);
+  } catch (error) {
     console.log(error);
     res.redirect(routes.editProfile);
   }
-
-}
+};
 
 export const getChangePassword = (req, res) =>
   res.render("changePassword", { pageTitle: "Change Password" });
 export const postChangePassword = async (req, res) => {
   try {
-    const {body: { oldPassword, newPassword, newPassword1 }} = req;
-     if (newPassword !== newPassword1) {
+    const {
+      body: { oldPassword, newPassword, newPassword1 },
+    } = req;
+    if (newPassword !== newPassword1) {
       res.status(400);
-      res.redirect(routes.users+routes.changePassword);
+      res.redirect(routes.users + routes.changePassword);
       return;
     }
     await req.user.changePassword(oldPassword, newPassword);
     res.redirect(routes.me);
-
-  } catch(error) {
+  } catch (error) {
     console.log(error);
     res.status(400);
-    res.redirect(routes.users+routes.changePassword);
+    res.redirect(routes.users + routes.changePassword);
   }
-
-}
+};
